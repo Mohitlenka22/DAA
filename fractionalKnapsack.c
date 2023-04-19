@@ -4,16 +4,16 @@ void knapsack(int n, float w[], float p[], float M);
 
 void swap(float *a, float *b)
 {
-    float *temp = a;
+    float temp = *a;
     *a = *b;
-    *b = *temp;
+    *b = temp;
 }
 
 int main()
 {
     float w[20], p[20], M;
     int n;
-    float ratio[20], temp;
+    float ratio[20];
 
     printf("Enter the no. of objects:- ");
     scanf("%d", &n);
@@ -44,7 +44,6 @@ int main()
             }
         }
     }
-
 
     knapsack(n, w, p, M);
 

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <limits.h>
 
 int i, j, k, a, b, u, v, n, ne = 1;

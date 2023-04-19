@@ -4,6 +4,7 @@ void minHeapify(int arr[], int n, int i);
 void swap(int *a, int *b);
 void buildHeap(int arr[], int n);
 int extract_min(int arr[]);
+void heapSort(int arr[]);
 
 int size;
 
@@ -14,9 +15,10 @@ int main()
     buildHeap(arr, size);
     for (int i = 0; i < size; i++)
         printf("%d ", arr[i]);
-    printf("\n");
-    printf("%d\n", extract_min(arr));
-    printf("%d\n", extract_min(arr));
+    // printf("\n");
+    // printf("%d\n", extract_min(arr));
+    // printf("%d\n", extract_min(arr));
+    heapSort(arr);
     for (int i = 0; i < size; i++)
         printf("%d ", arr[i]);
     return 0;
