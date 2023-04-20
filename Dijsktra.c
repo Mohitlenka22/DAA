@@ -43,6 +43,7 @@ void ShortestPaths(int v, int cost[100][100], int dist[], int predecessor[], int
     }
 }
 
+<<<<<<< HEAD
 void PrintPath(int s, int v, int predecessor[])
 {
     if (v == s)
@@ -55,6 +56,14 @@ void PrintPath(int s, int v, int predecessor[])
     }
     else
     {
+=======
+void PrintPath(int s, int v, int predecessor[]) {
+    if (v == s) {
+        printf("%d", s);
+    } else if (predecessor[v] == -1) {
+        printf("No path");
+    } else {
+>>>>>>> d30da9f6c7f0077712cb0cfcebc2d00e1627dcee
         PrintPath(s, predecessor[v], predecessor);
         printf(" -> %d", v);
     }
@@ -88,8 +97,17 @@ int main()
             printf("No path\n");
         else
             printf("%d\n", dist[i]);
+<<<<<<< HEAD
         PrintPath(v, i, predecessor);
         printf(")\n");
     }
     return 0;
 }
+=======
+            PrintPath(v, i, predecessor);
+            printf(")\n");
+    }
+    return 0;
+}
+ 
+>>>>>>> d30da9f6c7f0077712cb0cfcebc2d00e1627dcee

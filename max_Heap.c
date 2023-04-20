@@ -42,7 +42,7 @@ void buildHeap(int arr[], int n)
         maxHeapify(arr, n, i);
     //heap sort`
     for (int i = size - 1; i >= 0; i--)
-    {
+    { 
         swap(&arr[0], &arr[i]);
         maxHeapify(arr, i, 0);
     }
