@@ -4,7 +4,6 @@ void minHeapify(int arr[], int n, int i);
 void swap(int *a, int *b);
 void buildHeap(int arr[], int n);
 int extract_min(int arr[]);
-void heapSort(int arr[]);
 
 int size;
 

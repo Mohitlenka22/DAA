@@ -3,13 +3,15 @@
 void maxHeapify(int arr[], int n, int i);
 void swap(int *a, int *b);
 void buildHeap(int arr[], int n);
+void Heapsort(int arr[]);
 int size;
 
 int main()
 {
-    int arr[] = {40, 80, 35, 90, 45, 50, 70};
+    int arr[] = {80, 77, 34, 56, 23, 10};
     size = sizeof(arr) / sizeof(arr[0]);
     buildHeap(arr, size);
+    Heapsort(arr);
     for (int i = 0; i < size; i++)
         printf("%d ", arr[i]);
     return 0;
@@ -40,9 +42,13 @@ void buildHeap(int arr[], int n)
 {
     for (int i = (n / 2) - 1; i >= 0; i--)
         maxHeapify(arr, n, i);
-    //heap sort`
+}
+
+void Heapsort(int arr[])
+{
+    // heap sort`
     for (int i = size - 1; i >= 0; i--)
-    { 
+    {
         swap(&arr[0], &arr[i]);
         maxHeapify(arr, i, 0);
     }
