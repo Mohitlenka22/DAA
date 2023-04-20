@@ -40,6 +40,7 @@ void buildHeap(int arr[], int n)
 {
     for (int i = (n / 2) - 1; i >= 0; i--)
         maxHeapify(arr, n, i);
+    //heap sort`
     for (int i = size - 1; i >= 0; i--)
     {
         swap(&arr[0], &arr[i]);

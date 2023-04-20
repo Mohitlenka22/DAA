@@ -1,44 +1,48 @@
 #include <stdio.h>
-#include <limits.h>
 
-void ShortestPaths(int v, int cost[100][100], int dist[], int predecessor[], int n)
+int max, min;
+void Min_max(int arr[], int low, int high);
+
+int main()
 {
-    int S[n];
+    int n;
+    scanf("%d", &n);
+    int arr[n];
     for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+    Min_max(arr, 0, n - 1);
+    printf("%d %d", max, min);
+    return 0;
+}
+
+void Min_max(int arr[], int low, int high)
+{
+    if (low == high)
     {
-        S[i] = 0;
-        dist[i] = cost[v][i];
-        if (cost[v][i] < INT_MAX)
-            predecessor[i] = v;
-        else
-            predecessor[i] = -1;
+        max = min = arr[low];
     }
-    S[v] = 1;
-    dist[v] = 0;
-    predecessor[v] = -1;
-    for (int j = 2; j <= n; j++)
+    else if (low == high - 1)
     {
-        int u = -1;
-        int min_dist = INT_MAX;
-        for (int i = 0; i < n; i++)
+        if (arr[low] > arr[high])
         {
-            if (S[i] == 0 && dist[i] < min_dist)
-            {
-                u = i;
-                min_dist = dist[i];
-            }
+            max = arr[low];
+            min = arr[high];
         }
-        S[u] = 1;
-        for (int w = 0; w < n; w++)
+        else
         {
-            if (S[w] == 0 && cost[u][w] < INT_MAX)
-            {
-                if (dist[w] > (dist[u] + cost[u][w]))
-                {
-                    dist[w] = dist[u] + cost[u][w];
-                    predecessor[w] = u;
-                }
-            }
+            max = arr[high];
+            min = arr[low];
         }
+    }
+    else
+    {
+        int mid = (low + high) / 2;
+        Min_max(arr, low, mid);
+        int max1 = max, min1 = min;
+        Min_max(arr, mid + 1, high);
+        if (max1 > max)
+            max = max1;
+        if (min1 < min)
+            min = min1;
     }
 }
