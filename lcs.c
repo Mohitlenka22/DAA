@@ -1,6 +1,6 @@
 //lcs
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include <string.h>
 
 int lcs(char *s1, int m, char *s2, int n, int **dp) {

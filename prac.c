@@ -1,74 +1,58 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-int lcs(int *s1, int m, int *s2, int n, int **dp)
+int lcs(char *s1, char *s2, int m, int n, int **dp)
 {
-    int i, j;
-    for (i = 0; i <= m; i++)
-        dp[i][0] = 0;
-    for (i = 0; i <= n; i++)
-        dp[0][i] = 0;
-    for (i = 1; i <= m; i++)
+    for (int i = 1; i <= m; i++)
     {
-        for (j = 1; j <= n; j++)
+        for (int j = 1; j <= n; j++)
         {
             if (i == 0 || j == 0)
                 dp[i][j] = 0;
             if (s1[i - 1] == s2[j - 1])
                 dp[i][j] = 1 + dp[i - 1][j - 1];
             else
-                dp[i][j] = dp[i - 1][j] > dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1];
+                dp[i][j] = (dp[i][j - 1] > dp[i - 1][j]) ? dp[i][j - 1] : dp[i - 1][j];
         }
     }
     return dp[m][n];
 }
 
-void PRINT_LCS(int **dp, int *s1, int *s2, int m, int n)
+void print_lcs(int **dp, char *s1, char *s2, int i, int j)
 {
-    if (dp[m][n] == 0)
+    if (dp[i][j] == 0)
         return;
-    if (s1[m - 1] == s2[n - 1])
+    if (s1[i - 1] == s2[j - 1])
     {
-        PRINT_LCS(dp, s1, s2, m - 1, n - 1);
-        printf("%c", s1[m - 1]);
+        print_lcs(dp, s1, s2, i - 1, j - 1);
+        printf("%c", s1[i - 1]);
     }
-    else if (dp[m - 1][n] > dp[m][n - 1])
-        PRINT_LCS(dp, s1, s2, m - 1, n);
+    else if (dp[i][j - 1] > dp[i - 1][j])
+        print_lcs(dp, s1, s2, i, j - 1);
     else
-        PRINT_LCS(dp, s1, s2, m, n - 1);
-}
-
-void insertionSort(int arr[], int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        int key = arr[i];
-        int j = i - 1;
-        while (j >= 0 && arr[j] > key)
-        {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
-    }
+        print_lcs(dp, s1, s2, i - 1, j);
 }
 
 int main()
 {
-    int n
-    int  s1[100], s2[100];
-    
-    int **dp = (int **)malloc((m + 1) * sizeof(int *));
-    for (int i = 0; i < n; i++)
+    char s1[100], s2[100];
+    scanf("%s%s", s1, s2);
+    int m = strlen(s1);
+    int n = strlen(s2);
+    int **dp = (int **)malloc(sizeof(int *) * (m + 1));
+    for (int i = 0; i <= m; i++)
+    {
         dp[i] = (int *)malloc(sizeof(int) * (n + 1));
+        memset(dp[i], 0, sizeof(int) * (n + 1));
+    }
+    printf("%d\n", lcs(s1, s2, m, n, dp));
+    print_lcs(dp, s1, s2, m, n);
 
-    printf("%d\n", lcs(s1, m, s2, n, dp));
-
-    PRINT_LCS(dp, s1, s2, m, n);
-
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i <= m; i++)
+    {
         free(dp[i]);
+    }
     free(dp);
 
     return 0;

@@ -1,98 +1,101 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
 
-#define INF INT_MAX
+int n;
 
-void floyd_warshall(int **graph, int n)
+void printPath(int path[n][n], int src, int dest)
 {
-    int i, j, k;
-
-    int **dist = (int **)malloc(sizeof(int *) * n);
-    for (i = 0; i < n; i++)
+    if (path[src][dest] == -1)
     {
-        dist[i] = (int *)malloc(sizeof(int) * n);
+        printf("%d", src);
     }
-
-    for (i = 0; i < n; i++)
+    else
     {
-        for (j = 0; j < n; j++)
-        {
-            dist[i][j] = graph[i][j];
-        }
+        printPath(path, src, path[src][dest]);
+        printf("->%d", dest);
     }
+}
 
-    for (k = 0; k < n; k++)
+void printAllPaths(int dist[n][n], int path[n][n])
+{
+    for (int src = 0; src < n; src++)
     {
-        for (i = 0; i < n; i++)
+        for (int dest = 0; dest < n; dest++)
         {
-            for (j = 0; j < n; j++)
+            if (src != dest)
             {
-                if (dist[i][k] != INF && dist[k][j] != INF && dist[i][k] + dist[k][j] < dist[i][j])
+                printf("Shortest path from %d to %d: ", src, dest);
+                if (dist[src][dest] == 1e9)
                 {
-                    dist[i][j] = dist[i][k] + dist[k][j];
+                    printf("No path exists\n");
+                }
+                else
+                {
+                    printPath(path, src, dest);
+                    printf("\n");
                 }
             }
         }
     }
+}
 
-    printf("All pairs shortest path:\n");
-    for (i = 0; i < n; i++)
+void floyd_warshall(int graph[n][n])
+{
+    int dist[n][n], path[n][n];
+
+    for (int i = 0; i < n; i++)
     {
-        for (j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)
         {
-            if (dist[i][j] == INF)
+            dist[i][j] = graph[i][j];
+            if (graph[i][j] != 1e9 && i != j)
             {
-                printf("INF\t");
+                path[i][j] = i;
             }
             else
             {
-                printf("%d\t", dist[i][j]);
+                path[i][j] = -1;
             }
         }
-        printf("\n");
     }
 
-    for (i = 0; i < n; i++)
+    for (int k = 0; k < n; k++)
     {
-        free(dist[i]);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (dist[i][k] != 1e9 && dist[k][j] != 1e9 && dist[i][k] + dist[k][j] < dist[i][j])
+                {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                    path[i][j] = path[k][j];
+                }
+            }
+        }
     }
-    free(dist);
+    printAllPaths(dist, path);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         printf("%d ", dist[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 }
 
 int main()
 {
-    int n, i, j;
-
-    printf("Enter the number of vertices: ");
     scanf("%d", &n);
-
-    int **graph = (int **)malloc(sizeof(int *) * n);
-    for (i = 0; i < n; i++)
+    int graph[n][n];
+    for (int i = 0; i < n; i++)
     {
-        graph[i] = (int *)malloc(sizeof(int) * n);
-    }
-
-    printf("Enter the graph values:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)
         {
             scanf("%d", &graph[i][j]);
             if (graph[i][j] == -1)
-            {
-                graph[i][j] = INF;
-            }
+                graph[i][j] = 1e9;
         }
     }
-
-    floyd_warshall(graph, n);
-
-    for (i = 0; i < n; i++)
-    {
-        free(graph[i]);
-    }
-    free(graph);
-
+    floyd_warshall(graph);
     return 0;
 }

@@ -1,4 +1,4 @@
-//0/1 knapsack
+// 0/1 knapsack
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
